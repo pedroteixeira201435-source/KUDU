@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Preparing your download — Kudu Books</title>
+<meta name="robots" content="noindex" />
+<link rel="icon" type="image/png" href="/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#12603a;--dark:#0f2e21;--ink:#16241d;--muted:#5a6a62;--bg:#f6f8f7;--line:#e4eae6;--gold:#b7791f}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(180deg,#eef4f0,var(--bg));font-family:"Source Sans 3",Arial,sans-serif;color:var(--ink);line-height:1.55}.card{width:min(680px,calc(100% - 36px));background:white;border:1px solid var(--line);border-radius:18px;padding:34px;box-shadow:0 24px 60px rgba(15,46,33,.16)}h1{font-family:Lexend,sans-serif;font-size:clamp(30px,5vw,46px);line-height:1.08;margin:0 0 12px}p{font-size:18px;color:var(--muted);margin:0 0 18px}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:12px;padding:14px 22px;background:var(--brand);color:white;text-decoration:none;font-family:Lexend,sans-serif;font-weight:800;border:0;cursor:pointer}.btn.gold{background:var(--gold)}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}.status{padding:12px 14px;border-radius:12px;background:#f6f8f7;border:1px solid var(--line);font-weight:700;color:var(--dark)}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>Payment received. Preparing your download.</h1>
+  <p>We are checking the SWAPAY payment status. Once it is confirmed, your secure download button will appear here.</p>
+  <div class="status" id="status">Checking payment...</div>
+  <div class="actions">
+    <a class="btn" id="download" hidden href="#">Download Namibia Financial Model v10</a>
+    <a class="btn gold" href="https://wa.me/264858124505?text=Hi!%20I%20paid%20for%20the%20Namibia%20Financial%20Model%20v10%20and%20need%20my%20download." target="_blank" rel="noopener">Need help on WhatsApp</a>
+    <a class="btn" style="background:#fff;color:var(--brand);border:2px solid var(--brand)" href="/accountingtemplate">Back to product page</a>
+  </div>
+</main>
+<script>
+(async function(){
+  var statusEl=document.getElementById('status');
+  var dl=document.getElementById('download');
+  var params=new URLSearchParams(location.search);
+  var orderId=params.get('id')||params.get('order_id')||localStorage.getItem('kuduAccountingOrderId');
+  if(!orderId){statusEl.textContent='No order ID found. Please message us on WhatsApp and we will verify your payment.';return;}
+  for(var i=0;i<10;i++){
+    try{
+      var res=await fetch('/api/accountingtemplate-order-status?id='+encodeURIComponent(orderId));
+      var data=await res.json();
+      if(data.paid&&data.download_url){
+        statusEl.textContent='Payment confirmed. Your secure download is ready.';
+        dl.href=data.download_url;
+        dl.hidden=false;
+        return;
+      }
+      statusEl.textContent='Payment status: '+(data.status||'processing')+'. Checking again...';
+    }catch(err){
+      statusEl.textContent='Still waiting for confirmation. If this takes more than a minute, WhatsApp us and we will release it manually.';
+    }
+    await new Promise(function(resolve){setTimeout(resolve,4000)});
+  }
+  statusEl.textContent='Payment may still be processing. Please refresh this page or message us on WhatsApp for immediate help.';
+})();
+</script>
+</body>
+</html>
