@@ -1,0 +1,8 @@
+# Keep the paid product private: the workbook must never be served as a static
+# public asset. Production delivery reads the file from PRODUCT_BLOB_URL /
+# PRODUCT_FILE_BASE64 env (see api/_lib.js getProductBuffer); the local private/
+# copy is dev-only and must not be deployed.
+private
+
+# Docs don't need to ship.
+README.md
