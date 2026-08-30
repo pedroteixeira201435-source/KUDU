@@ -6,6 +6,18 @@
 <title>Preparing your download — Kudu Books</title>
 <meta name="robots" content="noindex" />
 <link rel="icon" type="image/png" href="/favicon.png" />
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1096839366331388');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1096839366331388&amp;ev=PageView&amp;noscript=1" /></noscript>
+<!-- End Meta Pixel Code -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;700;800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
@@ -40,6 +52,10 @@
         statusEl.textContent='Payment confirmed. Your secure download is ready.';
         dl.href=data.download_url;
         dl.hidden=false;
+        if(typeof fbq==='function' && !sessionStorage.getItem('kuduPurchaseTracked:'+orderId)){
+          fbq('track','Purchase',{value:18.67,currency:'USD',content_name:'Namibia Financial Model v10'});
+          sessionStorage.setItem('kuduPurchaseTracked:'+orderId,'1');
+        }
         return;
       }
       statusEl.textContent='Payment status: '+(data.status||'processing')+'. Checking again...';
