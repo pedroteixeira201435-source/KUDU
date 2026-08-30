@@ -156,7 +156,7 @@
           <div class="price">US$32.60</div>
           <p class="price-sub mt8"><strong>Equivalent to N$520</strong> at approximately 1 USD = 15.95 NAD.</p>
           <button class="btn btn-gold btn-lg buy-btn mt16" type="button">Buy and download now</button>
-          <p class="price-sub mt16" id="checkout-status">Secure card checkout charges US$32.60 via SWAPAY.</p>
+          <p class="price-sub mt16" id="checkout-status">Secure card checkout charges US$32.60.</p>
         </div>
       </div>
     </div>
@@ -181,7 +181,7 @@
         <details><summary>Is there a subscription?</summary><div class="ans">No. One payment, yours forever. No recurring fees.</div></details>
         <details><summary>Will this work on my computer?</summary><div class="ans">Yes, if you have Microsoft Excel 2016 or newer, including Microsoft 365. It does not work reliably in Google Sheets or LibreOffice.</div></details>
         <details><summary>Can my accountant still be involved?</summary><div class="ans">Yes. Many owners use it daily and still share clean outputs with their accountant when needed.</div></details>
-        <details><summary>What happens after payment?</summary><div class="ans">After SWAPAY confirms payment, the success page prepares a secure temporary download link for the Excel file. If anything gets stuck, WhatsApp support is the fallback.</div></details>
+        <details><summary>What happens after payment?</summary><div class="ans">Once your payment is confirmed, the success page prepares a secure temporary download link for the Excel file. If anything gets stuck, WhatsApp support is the fallback.</div></details>
       </div>
     </div>
   </section>
@@ -204,7 +204,7 @@
     var original=btn.textContent;
     document.querySelectorAll('.buy-btn').forEach(function(b){b.setAttribute('aria-busy','true')});
     btn.textContent='Creating secure checkout...';
-    if(status) status.textContent='Creating your SWAPAY payment link...';
+    if(status) status.textContent='Creating your secure payment link...';
     try{
       var res=await fetch('/api/create-accountingtemplate-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});
       var data=await res.json();

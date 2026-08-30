@@ -10,15 +10,29 @@ See the Releases tab for the latest version.
 - `/accountingtemplate/success` - payment return page that prepares a secure download.
 - `/accountingtemplate/cancel` - cancelled checkout page.
 
-## Checkout Environment
+## Checkout Environment (Whop)
 
-Set these in Vercel before using live SWAPAY checkout:
+Payments run through [Whop](https://whop.com). Set these in Vercel before using live checkout:
 
-- `SWAPAY_API_KEY` - rotated SWAPAY production API key.
+- `WHOP_API_KEY` - rotated Whop company API key (never in public HTML or Git).
+- `WHOP_COMPANY_ID` - `biz_J8AD6UwcxnXKqV`.
+- `WHOP_PLAN_ID` - the one-time **$32.60 USD** plan under the "Namibia Financial Model" product.
 - `TOKEN_SECRET` - long random secret used to sign temporary download links.
 - `SITE_ORIGIN` - `https://kudubooks.com`.
-- `SWAPAY_BASE_URL` - `https://api.swa-pay.com`.
-- `PRODUCT_FILE_BASE64` - base64-encoded Namibia Financial Model v10 `.xlsx` file for secure production delivery.
+- `PRODUCT_FILE_BASE64` - base64-encoded Namibia Financial Model v10 `.xlsx` for secure production delivery.
 
-The SWAPAY key must never be placed in public HTML or committed to Git.
+Optional (defaults are correct): `WHOP_BASE_URL`, `WHOP_CHECKOUT_BASE`.
+
+### One-time Whop dashboard setup
+
+1. Create/confirm a **one-time $32.60 USD** plan on the "Namibia Financial Model" product; put its `plan_...` id in `WHOP_PLAN_ID`. (The seeded plan `plan_pyi8mrEJbjGkJ` is priced Free — do not use it.)
+2. Set the product's **post-purchase redirect URL** to `https://kudubooks.com/accountingtemplate/success` so buyers return to the download page.
+3. (Optional) Add a webhook at `https://kudubooks.com/api/whop-webhook` for `payment.succeeded` / `payment.failed`.
+
+### How checkout works
+
+- `create-accountingtemplate-order` mints an order id and returns the hosted Whop checkout URL with the order id attached as checkout metadata. No Whop resources are created at request time.
+- `accountingtemplate-order-status` finds the settled Whop payment carrying that order id (`status === "paid"`) and returns a short-lived signed download link.
+- `download-accountingtemplate` re-checks the live payment before streaming the `.xlsx`.
+
 Do not commit the product workbook; `private/*.xlsx` is ignored for local testing only.
