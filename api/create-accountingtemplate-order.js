@@ -12,7 +12,10 @@ module.exports = async function handler(req, res) {
   }
   try {
     const orderId = `KUDU-NFM-${Date.now()}-${crypto.randomBytes(4).toString('hex')}`;
-    const redirectUrl = `${siteOrigin(req)}/accountingtemplate/success`;
+    // Carry the order id in the redirect so the success page always has it,
+    // independent of localStorage (which does not survive the whop.com hop
+    // reliably across browsers / private windows).
+    const redirectUrl = `${siteOrigin(req)}/accountingtemplate/success?id=${encodeURIComponent(orderId)}`;
     const { id: checkoutId, purchaseUrl } = await createWhopCheckout(orderId, redirectUrl);
     return res.status(200).json({
       id: orderId,
