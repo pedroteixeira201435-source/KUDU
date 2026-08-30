@@ -6,13 +6,16 @@ const path = require('path');
 // never creates plans/products at runtime — it only builds the hosted checkout
 // URL and reads payment status back. Create the paid plan once in the dashboard
 // (or via the API) and put its id in WHOP_PLAN_ID.
+// Delivered as a zip bundling the workbook + the User Guide PDF (the demo and
+// the video are intentionally excluded).
 const PRODUCT = {
   id: 'namibia-financial-model-v10',
   description: 'Namibia Financial Model v10',
   amount: 32.60,
   currency: 'USD',
-  fileName: 'Namibia_Financial_Model_v10.xlsx',
-  filePath: path.join(process.cwd(), 'private', 'Namibia_Financial_Model_v10.xlsx')
+  fileName: 'Namibia_Financial_Model_v10.zip',
+  contentType: 'application/zip',
+  filePath: path.join(process.cwd(), 'private', 'Namibia_Financial_Model_v10.zip')
 };
 
 const fs = require('fs');

@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
     const buffer = await getProductBuffer();
     if (!buffer) return res.status(500).json({ error: 'Product file is not available' });
 
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Type', PRODUCT.contentType || 'application/octet-stream');
     res.setHeader('Content-Disposition', `attachment; filename="${PRODUCT.fileName}"`);
     return res.status(200).send(buffer);
   } catch (error) {
