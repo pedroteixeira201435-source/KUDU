@@ -121,54 +121,59 @@ function verifyDownloadToken(token) {
   return { orderId, exp };
 }
 
-// --- Whop payment lookup ----------------------------------------------------
+// --- Whop order fulfilment lookup ------------------------------------------
 
-// A Whop payment is only fully settled (money guaranteed, download safe to
-// release) when status === "paid". draft/open/authorized/pending are NOT
-// settled, so we must never release the file on those.
-function isPaid(payment) {
-  return String(payment && payment.status || '').toLowerCase() === 'paid';
-}
-
-// Find the settled payment that belongs to a given order id. Primary match is
-// on the checkout metadata we attached; it is scoped to our plan so unrelated
+// A one-time order is fulfilled either by a settled payment (paid plans) or an
+// active membership (covers free/$0 plans used for testing). Both are matched
+// on the checkout metadata we attached and scoped to our plan, so unrelated
 // products on the same Whop company can never satisfy a download.
-async function findPaidPaymentForOrder(orderId) {
-  const url = new URL(`${whopBaseUrl()}/payments`);
-  url.searchParams.set('company_id', whopCompanyId());
-  url.searchParams.set('per', '50');
-  const response = await fetch(url, {
-    headers: { Authorization: `Bearer ${whopApiKey()}` }
-  });
+const PAID_PAYMENT_STATUS = 'paid';
+const ACTIVE_MEMBERSHIP_STATUSES = new Set(['active', 'completed', 'trialing']);
+
+async function whopList(pathname, params) {
+  const url = new URL(`${whopBaseUrl()}${pathname}`);
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  const response = await fetch(url, { headers: { Authorization: `Bearer ${whopApiKey()}` } });
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw new Error((data.error && data.error.message) || `Whop payments request failed with ${response.status}`);
+    throw new Error((data.error && data.error.message) || `Whop ${pathname} failed with ${response.status}`);
   }
-  const planId = whopPlanId();
-  const payments = Array.isArray(data.data) ? data.data : [];
-  const forOrder = payments.filter((p) => {
-    const md = p && p.metadata;
-    return md && String(md.order_id) === String(orderId);
-  });
-  const settled = forOrder.find((p) => isPaid(p) && belongsToPlan(p, planId));
-  if (settled) return settled;
-  // Not yet settled: surface the most recent matching payment so the status
-  // endpoint can report its progress (e.g. "pending") to the buyer.
-  return forOrder.find((p) => belongsToPlan(p, planId)) || null;
+  return Array.isArray(data.data) ? data.data : [];
 }
 
-function belongsToPlan(payment, planId) {
-  if (!payment) return false;
-  const candidates = [
-    payment.plan_id,
-    payment.plan && payment.plan.id,
-    payment.plan
-  ];
-  // If the payment object does not expose a plan reference at all, fall back to
-  // the metadata match alone (already plan-agnostic) rather than rejecting it.
-  const known = candidates.filter((c) => typeof c === 'string');
-  if (known.length === 0) return true;
-  return known.includes(planId);
+function metadataMatchesOrder(record, orderId) {
+  return !!(record && record.metadata && String(record.metadata.order_id) === String(orderId));
+}
+
+function belongsToPlan(record, planId) {
+  if (!record) return false;
+  const known = [record.plan_id, record.plan && record.plan.id, record.plan]
+    .filter((c) => typeof c === 'string');
+  // If no plan reference is exposed, rely on the metadata match alone.
+  return known.length === 0 ? true : known.includes(planId);
+}
+
+// Returns { fulfilled, status } for an order id.
+async function resolveOrder(orderId) {
+  const planId = whopPlanId();
+
+  // 1) Settled paid payment (paid plans). include_free surfaces $0 payments too.
+  const payments = await whopList('/payments', {
+    company_id: whopCompanyId(), per: '50', include_free: 'true'
+  });
+  const payMatches = payments.filter((p) => metadataMatchesOrder(p, orderId) && belongsToPlan(p, planId));
+  const paid = payMatches.find((p) => String(p.status || '').toLowerCase() === PAID_PAYMENT_STATUS);
+  if (paid) return { fulfilled: true, status: String(paid.status) };
+
+  // 2) Active membership (covers free/$0 plans, and is a robust paid signal too).
+  const memberships = await whopList('/memberships', { company_id: whopCompanyId(), per: '50' });
+  const memMatches = memberships.filter((m) => metadataMatchesOrder(m, orderId) && belongsToPlan(m, planId));
+  const active = memMatches.find((m) => ACTIVE_MEMBERSHIP_STATUSES.has(String(m.status || '').toLowerCase()));
+  if (active) return { fulfilled: true, status: `membership:${active.status}` };
+
+  // Not yet fulfilled: report the best-known progress for the buyer.
+  const pending = payMatches[0] || memMatches[0];
+  return { fulfilled: false, status: (pending && pending.status) || 'pending' };
 }
 
 module.exports = {
@@ -183,6 +188,5 @@ module.exports = {
   whopCheckoutUrl,
   signDownloadToken,
   verifyDownloadToken,
-  isPaid,
-  findPaidPaymentForOrder
+  resolveOrder
 };

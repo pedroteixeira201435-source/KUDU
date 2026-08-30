@@ -1,7 +1,8 @@
-const { findPaidPaymentForOrder, isPaid, signDownloadToken } = require('./_lib');
+const { resolveOrder, signDownloadToken } = require('./_lib');
 
-// Polled by the success page. Reports whether the Whop payment for this order
-// has settled and, if so, returns a short-lived signed download link.
+// Polled by the success page. Reports whether the Whop order for this id has
+// been fulfilled (paid payment or active membership) and, if so, returns a
+// short-lived signed download link.
 module.exports = async function handler(req, res) {
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
@@ -11,13 +12,12 @@ module.exports = async function handler(req, res) {
   if (!orderId) return res.status(400).json({ error: 'Missing order id' });
 
   try {
-    const payment = await findPaidPaymentForOrder(orderId);
-    const paid = isPaid(payment);
+    const { fulfilled, status } = await resolveOrder(orderId);
     return res.status(200).json({
       id: orderId,
-      status: (payment && payment.status) || 'pending',
-      paid,
-      download_url: paid
+      status: status || 'pending',
+      paid: fulfilled,
+      download_url: fulfilled
         ? `/api/download-accountingtemplate?token=${encodeURIComponent(signDownloadToken(orderId))}`
         : null
     });
