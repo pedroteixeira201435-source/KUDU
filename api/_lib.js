@@ -15,17 +15,38 @@ const PRODUCT = {
   filePath: path.join(process.cwd(), 'private', 'Namibia_Financial_Model_v10.xlsx')
 };
 
+const fs = require('fs');
+
 function productFileBuffer() {
   if (process.env.PRODUCT_FILE_BASE64) {
     return Buffer.from(process.env.PRODUCT_FILE_BASE64, 'base64');
   }
-  // Vercel caps a single env var at ~64KB and the base64 workbook is larger, so
-  // it may be split across PRODUCT_FILE_BASE64_1, _2, ... (concatenated in order).
+  // Vercel caps the *total* size of env vars at ~64KB and the base64 workbook is
+  // larger, so this only helps for small files: PRODUCT_FILE_BASE64_1, _2, ...
   let combined = '';
   for (let i = 1; process.env[`PRODUCT_FILE_BASE64_${i}`]; i += 1) {
     combined += process.env[`PRODUCT_FILE_BASE64_${i}`];
   }
   if (combined) return Buffer.from(combined, 'base64');
+  return null;
+}
+
+// Resolves the product workbook bytes for delivery, in order of preference:
+//   1. inline base64 env (small files only),
+//   2. PRODUCT_BLOB_URL — a Vercel Blob object fetched server-side. The client
+//      never sees this URL; it only ever hits our gated /api/download route, so
+//      the file stays behind the paywall,
+//   3. local private/ file (dev only; not deployed).
+async function getProductBuffer() {
+  const inline = productFileBuffer();
+  if (inline) return inline;
+  const blobUrl = process.env.PRODUCT_BLOB_URL;
+  if (blobUrl) {
+    const r = await fetch(blobUrl);
+    if (!r.ok) throw new Error(`Product blob fetch failed with ${r.status}`);
+    return Buffer.from(await r.arrayBuffer());
+  }
+  if (fs.existsSync(PRODUCT.filePath)) return fs.readFileSync(PRODUCT.filePath);
   return null;
 }
 
@@ -151,6 +172,7 @@ module.exports = {
   PRODUCT,
   siteOrigin,
   productFileBuffer,
+  getProductBuffer,
   whopApiKey,
   whopCompanyId,
   whopPlanId,

@@ -19,9 +19,15 @@ Payments run through [Whop](https://whop.com). Set these in Vercel before using 
 - `WHOP_PLAN_ID` - the one-time **$32.60 USD** plan under the "Namibia Financial Model" product.
 - `TOKEN_SECRET` - long random secret used to sign temporary download links.
 - `SITE_ORIGIN` - `https://kudubooks.com`.
-- `PRODUCT_FILE_BASE64` - base64-encoded Namibia Financial Model v10 `.xlsx` for secure production delivery.
+- `PRODUCT_BLOB_URL` - URL of the Namibia Financial Model v10 `.xlsx` stored in **Vercel Blob**. The download function fetches this server-side; the client never sees it, so the file stays behind the paywall. (The `.xlsx` cannot be an env var — Vercel caps total env size at 64KB — and must not be committed to this public repo.)
 
-Optional (defaults are correct): `WHOP_BASE_URL`, `WHOP_CHECKOUT_BASE`.
+Optional (defaults are correct): `WHOP_BASE_URL`, `WHOP_CHECKOUT_BASE`. Small files may instead use `PRODUCT_FILE_BASE64` / `PRODUCT_FILE_BASE64_1..N`.
+
+### Product file storage (Vercel Blob)
+
+1. Vercel dashboard → **Storage → Create → Blob**, connect it to the `kudubooks` project (adds `BLOB_READ_WRITE_TOKEN`).
+2. Upload `private/Namibia_Financial_Model_v10.xlsx` to the store.
+3. Put the resulting blob URL in `PRODUCT_BLOB_URL` and redeploy.
 
 ### One-time Whop dashboard setup
 
