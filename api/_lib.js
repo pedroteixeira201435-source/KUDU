@@ -79,18 +79,27 @@ function whopBaseUrl() {
   return (process.env.WHOP_BASE_URL || 'https://api.whop.com/api/v1').replace(/\/$/, '');
 }
 
-function whopCheckoutBase() {
-  return (process.env.WHOP_CHECKOUT_BASE || 'https://whop.com/checkout').replace(/\/$/, '');
-}
-
-// Hosted Whop checkout URL for our fixed plan. The order id is attached as
-// checkout metadata so the resulting payment can be matched back to this
-// browser session (Whop copies checkout metadata onto the payment object).
-function whopCheckoutUrl(orderId) {
-  const url = `${whopCheckoutBase()}/${encodeURIComponent(whopPlanId())}`;
-  const q = new URLSearchParams();
-  q.set('metadata[order_id]', orderId);
-  return `${url}?${q.toString()}`;
+// Creates a per-order Whop checkout session. Whop does NOT copy metadata from a
+// static checkout link's query string, so we must create a Checkout
+// Configuration server-side with our order_id in its metadata — payments and
+// memberships created from the session then inherit that metadata, which is how
+// we match a completed purchase back to this order. Returns the hosted
+// purchase_url (…/checkout/ch_xxx/) to redirect the buyer to.
+async function createWhopCheckout(orderId, redirectUrl) {
+  const body = { plan_id: whopPlanId(), metadata: { order_id: orderId } };
+  if (redirectUrl) body.redirect_url = redirectUrl;
+  const response = await fetch(`${whopBaseUrl()}/checkout_configurations`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${whopApiKey()}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error((data.error && data.error.message) || `Whop checkout create failed with ${response.status}`);
+  }
+  const purchaseUrl = data.purchase_url || data.url;
+  if (!purchaseUrl) throw new Error('Whop did not return a purchase_url');
+  return { id: data.id, purchaseUrl };
 }
 
 // --- download token (HMAC, 30 min) -----------------------------------------
@@ -185,7 +194,7 @@ module.exports = {
   whopCompanyId,
   whopPlanId,
   whopBaseUrl,
-  whopCheckoutUrl,
+  createWhopCheckout,
   signDownloadToken,
   verifyDownloadToken,
   resolveOrder
