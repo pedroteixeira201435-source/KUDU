@@ -11,7 +11,7 @@ const path = require('path');
 const PRODUCT = {
   id: 'namibia-financial-model-v10',
   description: 'Namibia Financial Model v10',
-  amount: 32.60,
+  amount: 18.67,
   currency: 'USD',
   fileName: 'Namibia_Financial_Model_v10.zip',
   contentType: 'application/zip',
@@ -71,7 +71,7 @@ function whopCompanyId() {
 
 function whopPlanId() {
   const id = process.env.WHOP_PLAN_ID;
-  if (!id) throw new Error('WHOP_PLAN_ID is not configured (the one-time $32.60 plan)');
+  if (!id) throw new Error('WHOP_PLAN_ID is not configured (the one-time $18.67 plan)');
   return id;
 }
 

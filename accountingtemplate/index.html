@@ -4,17 +4,17 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Namibia Financial Model v10 — Complete Accounting System for Namibian SMEs</title>
-<meta name="description" content="Stop paying N$1,500-3,000 every month just to understand your books. Get a complete Namibian SME accounting system in one Excel file for N$520 (≈ US$32.60) once-off." />
+<meta name="description" content="Stop paying N$1,500-3,000 every month just to understand your books. Get a complete Namibian SME accounting system in one Excel file — founding price N$298 (≈ US$18.67) once-off, rising to N$990." />
 <link rel="canonical" href="https://kudubooks.com/accountingtemplate" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://kudubooks.com/accountingtemplate" />
 <meta property="og:site_name" content="Kudu Books" />
 <meta property="og:title" content="Namibia Financial Model v10 — Stop Paying an Accountant Every Month" />
-<meta property="og:description" content="One Excel file. Full double-entry accounting, VAT, tax, AFS and loan-pack reports for Namibian SMEs. N$520 (≈ US$32.60) once-off." />
+<meta property="og:description" content="One Excel file. Full double-entry accounting, VAT, tax, AFS and loan-pack reports for Namibian SMEs. Founding price N$298 (≈ US$18.67) once-off — rising to N$990." />
 <meta property="og:image" content="https://kudubooks.com/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Namibia Financial Model v10" />
-<meta name="twitter:description" content="A complete Namibian SME accounting system in one Excel file. N$520 (≈ US$32.60) once-off." />
+<meta name="twitter:description" content="A complete Namibian SME accounting system in one Excel file. Founding price N$298 (≈ US$18.67) once-off — rising to N$990." />
 <meta name="twitter:image" content="https://kudubooks.com/og-image.png" />
 <link rel="icon" type="image/png" href="/favicon.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -31,6 +31,45 @@
 .video-section{background:linear-gradient(180deg,var(--bg),#eef4f0);position:relative}.video-shell{display:grid;grid-template-columns:.82fr 1.18fr;gap:clamp(24px,4vw,46px);align-items:center}.video-copy{background:var(--brand-d);color:white;border-radius:18px;padding:28px;box-shadow:var(--shadow-lg)}.video-copy .eyebrow{color:#8fd6b4}.video-copy p{color:#cfe4d9}.watch-list{list-style:none;margin:20px 0 0;padding:0;display:grid;gap:10px}.watch-list li{display:flex;gap:10px;align-items:flex-start;color:#eaf7f0;font-weight:700}.watch-list li:before{content:"✓";width:22px;height:22px;border-radius:50%;background:#ffffff1a;color:#ffe9cf;display:grid;place-items:center;flex:none;font-family:Lexend,sans-serif}.video-card{position:relative;border:1px solid var(--line);border-radius:20px;background:white;padding:12px;box-shadow:var(--shadow-lg)}.video-card:before{content:"Watch the demo first";position:absolute;top:-16px;left:24px;background:var(--gold);color:white;border-radius:999px;padding:7px 14px;font-family:Lexend,sans-serif;font-size:12.5px;font-weight:800;z-index:2}.video-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0b241a}.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.video-caption{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:14px 4px 2px;font-weight:800;color:var(--brand-ink)}.video-caption span:last-child{color:var(--gold)}
 @media(max-width:900px){.hero-grid,.price-box{grid-template-columns:1fr}.trust,.pain-grid,.grid3{grid-template-columns:1fr}.hero{text-align:center}.hero-cta{justify-content:center}.stack-row{grid-template-columns:auto 1fr}.amt{grid-column:2}.mock{text-align:left}}
 @media(max-width:900px){.video-shell{grid-template-columns:1fr}.video-copy{text-align:center}.watch-list{text-align:left}.video-caption{align-items:flex-start;flex-direction:column}}
+/* founder-price urgency + live viewers */
+.founder-banner{display:inline-flex;align-items:center;gap:10px;background:var(--gold-soft);border:1px solid #f0dcae;color:#7a5410;font-weight:800;font-size:14px;padding:8px 16px;border-radius:999px;font-family:Lexend,sans-serif}
+.founder-banner .flame{filter:saturate(1.2)}
+.viewers{position:fixed;left:18px;bottom:18px;z-index:60;display:flex;align-items:center;gap:10px;background:#0b241a;color:#eaf7f0;border:1px solid #2a5a45;border-radius:999px;padding:10px 16px;box-shadow:var(--shadow-lg);font-weight:700;font-size:14px;font-family:Lexend,sans-serif}
+.viewers .live{position:relative;width:9px;height:9px;border-radius:50%;background:#37d67a;flex:none}
+.viewers .live:before{content:"";position:absolute;inset:-5px;border-radius:50%;background:#37d67a;opacity:.35;animation:pulse 1.8s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.7);opacity:.5}100%{transform:scale(2.2);opacity:0}}
+.viewers b{color:#7ef0ad}
+.viewers .x{margin-left:2px;color:#9fb8ac;cursor:pointer;font-weight:800;padding:0 2px}
+@media(prefers-reduced-motion:reduce){.viewers .live:before{animation:none}}
+@media(max-width:520px){.viewers{left:10px;right:10px;bottom:10px;justify-content:center;font-size:13px}}
+/* value stack total anchor */
+.stack-total{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:16px;padding:22px 24px;border-radius:16px;background:linear-gradient(120deg,var(--brand),var(--brand-ink));color:#fff;box-shadow:var(--shadow-lg)}
+.stack-total .big{font-family:Lexend,sans-serif;font-weight:800;font-size:clamp(22px,3.4vw,30px)}
+.stack-total s{opacity:.75;font-weight:600}
+/* bonuses */
+.bonus-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+@media(max-width:900px){.bonus-grid{grid-template-columns:1fr}}
+.bonus{position:relative;background:#fff;border:2px dashed var(--gold);border-radius:16px;padding:24px;box-shadow:var(--shadow);text-align:left}
+.bonus .tag{position:absolute;top:-13px;left:20px;background:var(--gold);color:#fff;font-family:Lexend,sans-serif;font-weight:800;font-size:12px;padding:5px 12px;border-radius:999px}
+.bonus h3{font-size:19px;margin-top:6px}.bonus p{margin-top:8px;color:var(--muted)}
+.bonus .worth{display:inline-block;margin-top:12px;background:var(--gold-soft);color:#7a5410;border:1px solid #f0dcae;font-weight:800;font-size:13px;padding:5px 12px;border-radius:999px}
+/* testimonials */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+@media(max-width:900px){.tgrid{grid-template-columns:1fr}}
+.tcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--shadow);text-align:left;display:flex;flex-direction:column}
+.tcard .stars{color:var(--gold);letter-spacing:2px;font-size:15px}
+.tcard p{margin-top:10px;font-size:16.5px;color:var(--ink)}
+.tcard .who{display:flex;align-items:center;gap:12px;margin-top:16px}
+.tcard .av{width:40px;height:40px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-family:Lexend,sans-serif;font-weight:800;flex:none}
+.tcard .who b{font-family:Lexend,sans-serif;display:block;font-size:14.5px}
+.tcard .who small{color:var(--muted);display:flex;align-items:center;gap:5px}
+.tcard .who svg{width:13px;height:13px;color:var(--ok)}
+.proof-band{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:26px}
+.proof-band span{display:inline-flex;align-items:center;gap:8px;background:#e9f5ef;border:1px solid #bfe6cf;color:var(--brand-ink);font-weight:800;font-size:14px;padding:9px 16px;border-radius:999px}
+/* price ladder */
+.ladder{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:6px}
+.ladder .was{font-family:Lexend,sans-serif;font-weight:800;font-size:26px;color:#ffe9cf;text-decoration:line-through;opacity:.85}
+.ladder .arrow-up{color:#ffe9cf;font-weight:800}
 </style>
 </head>
 <body>
@@ -40,21 +79,21 @@
     <nav class="nav-links">
       <a href="#demo">Demo</a><a href="#problem">Problem</a><a href="#value">What you get</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
     </nav>
-    <a class="btn btn-primary buy-btn" href="#pricing">Buy N$520</a>
+    <a class="btn btn-primary buy-btn" href="#pricing">Buy N$298</a>
   </div>
 </header>
 <main>
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="pill"><span class="dot"></span> Namibia Financial Model v10 · Excel 2016+</span>
+        <span class="founder-banner"><span class="flame">🔥</span> Founding price: N$298 today — rising to N$990</span>
         <h1>Stop Paying an Accountant <span class="hl">Every Month.</span></h1>
-        <p class="lead mt16">Do you actually know if your business made a profit last month, or are you guessing? Get full double-entry accounting, NamRA-ready tax, bank-ready statements and a loan pack in one Excel file.</p>
+        <p class="lead mt16">Do you actually know if your business made a profit last month, or are you guessing? Get full double-entry accounting, NamRA-ready tax, bank-ready statements and a loan pack in one Excel file — download it and see your real numbers tonight.</p>
         <div class="hero-cta">
-          <button class="btn btn-primary btn-lg buy-btn" type="button">Buy now for N$520</button>
+          <button class="btn btn-primary btn-lg buy-btn" type="button">Buy now for N$298</button>
           <a class="btn btn-ghost btn-lg" data-wa="Hi! I want the Namibia Financial Model v10. Can you help me buy it?" href="#">Ask on WhatsApp</a>
         </div>
-        <p class="note">Once-off payment. Yours forever. Includes 3 months WhatsApp support and a 30-day money-back guarantee.</p>
+        <p class="note">Once-off payment. Yours forever. Includes the NamRA deadline calendar, a personal 1:1 WhatsApp setup, 3 months support and a 30-day money-back guarantee.</p>
         <div class="trust"><span>No monthly fees</span><span>Built for Namibia</span><span>Bank-ready outputs</span></div>
       </div>
       <div class="mock" aria-label="Product preview">
@@ -84,10 +123,10 @@
         <p class="lead mt16">In a few minutes, you will see exactly how the Namibia Financial Model helps you enter transactions, read profit, calculate tax and prepare bank-ready outputs without learning accounting.</p>
         <ul class="watch-list">
           <li>See the actual product, not theory</li>
-          <li>Understand the N$520 value before checkout</li>
+          <li>Understand the N$298 founding-price value before checkout</li>
           <li>Know what happens after you download it</li>
         </ul>
-        <div class="hero-cta"><button class="btn btn-gold buy-btn" type="button">I watched it. Buy N$520</button></div>
+        <div class="hero-cta"><button class="btn btn-gold buy-btn" type="button">I watched it. Buy N$298</button></div>
       </div>
       <div class="video-card">
         <div class="video-frame">
@@ -131,6 +170,10 @@
         <div class="stack-row"><span class="chk">✓</span><span><b>Loan Pack</b><small>DSCR, affordability and a printable 1-page bank application summary.</small></span><span class="amt">worth N$1,200</span></div>
         <div class="stack-row"><span class="chk">✓</span><span><b>Formal Annual Financial Statements</b><small>Cover, Income, Position, Equity, Cash Flows and Notes.</small></span><span class="amt">worth N$2,000</span></div>
         <div class="stack-row"><span class="chk">✓</span><span><b>Asset Register and Vehicle Import Calculator</b><small>NamRA depreciation rates plus customs duty, ad valorem and VAT for vehicle imports.</small></span><span class="amt">specialized</span></div>
+        <div class="stack-total">
+          <div>Buy this set-up from an accountant: <span class="big"><s>over N$6,000</s></span> <small style="opacity:.8">— plus N$1,500–3,000 every month after</small></div>
+          <div class="big">Founding price: N$298 once</div>
+        </div>
       </div>
     </div>
   </section>
@@ -143,20 +186,71 @@
       </div>
     </div>
   </section>
+  <section class="section" style="background:linear-gradient(180deg,var(--bg),#eef4f0)">
+    <div class="wrap center">
+      <span class="eyebrow">Free when you buy today</span>
+      <h2 class="h2 mt8">Three bonuses stacked on top.</h2>
+      <p class="lead mt16" style="max-width:720px;margin-inline:auto">You are not just buying a file — you get set up properly and never miss a NamRA deadline again.</p>
+      <div class="bonus-grid">
+        <div class="bonus"><span class="tag">Bonus #1</span>
+          <h3>2026 NamRA Deadline Calendar</h3>
+          <p>Every VAT, PAYE and income-tax date for the year on one page you can pin to the wall. Never scramble at the last minute again.</p>
+          <span class="worth">worth N$300</span>
+        </div>
+        <div class="bonus"><span class="tag">Bonus #2</span>
+          <h3>Personal 1:1 WhatsApp setup</h3>
+          <p>We sit with you on WhatsApp and set up your company, chart of accounts and first entries — so you are running from day one, not stuck.</p>
+          <span class="worth">worth N$500</span>
+        </div>
+        <div class="bonus"><span class="tag">Bonus #3</span>
+          <h3>3 months priority support</h3>
+          <p>Direct WhatsApp line to us for three full months. Ask anything, any time, while you get comfortable with your numbers.</p>
+          <span class="worth">worth N$900</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="proof">
+    <div class="wrap center">
+      <span class="eyebrow">Real owners. Real payments.</span>
+      <h2 class="h2 mt8">Namibian businesses are already using it.</h2>
+      <div class="tgrid">
+        <div class="tcard" style="border-color:#bfe6cf;background:#f3fbf6">
+          <div class="stars">★★★★★</div>
+          <p>“The system is working on my other computers. Thank you so much sir. <b>This is the system I was always looking for.</b>”</p>
+          <div class="who"><span class="av">R</span><span><b>Verified WhatsApp customer</b><small><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Namibia</small></span></div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <p>Real payments confirmed by EFT — <b>Standard Bank &amp; Bank Windhoek</b> proof of payment on file. Some owners bought licences for more than one business.</p>
+          <div class="who"><span class="av">✓</span><span><b>Confirmed purchases</b><small><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Verified proof of payment</small></span></div>
+        </div>
+        <div class="tcard">
+          <div class="stars">★★★★★</div>
+          <p>“I want both.” Owners buying for multiple companies — from <b>Walvis Bay to Windhoek</b> — and coming back to add their company logo to payslips.</p>
+          <div class="who"><span class="av">N</span><span><b>Owners across Namibia</b><small><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Repeat &amp; multi-licence buyers</small></span></div>
+        </div>
+      </div>
+      <div class="proof-band">
+        <span>💬 Want to see the real WhatsApp chats? Ask us — we’ll send screenshots.</span>
+      </div>
+    </div>
+  </section>
   <section class="section" id="pricing">
     <div class="wrap">
       <div class="price-box">
         <div>
-          <span class="eyebrow" style="color:#ffe9cf">One-time offer</span>
-          <h2 class="h2 mt8">N$520 once-off. Yours forever.</h2>
-          <p class="price-sub mt16">An accountant can cost that much every month. This is a fraction of one month's fee for a system you keep.</p>
-          <p class="price-sub mt16"><span class="strike">Included:</span> 3 months personal WhatsApp support + 30-day money-back guarantee.</p>
+          <span class="eyebrow" style="color:#ffe9cf">Founding price — while it lasts</span>
+          <h2 class="h2 mt8">N$298 once-off. Yours forever.</h2>
+          <p class="price-sub mt16">An accountant can cost N$1,500–3,000 <em>every month</em>. This is a one-time founding price for a full system you keep — it rises to <b>N$990</b> once the founding window closes.</p>
+          <p class="price-sub mt16"><span class="strike">Included:</span> NamRA deadline calendar + 1:1 WhatsApp setup + 3 months support + 30-day money-back guarantee.</p>
         </div>
         <div class="center">
-          <div class="price">N$520</div>
-          <p class="price-sub mt8"><strong>≈ US$32.60</strong> — billed in USD at checkout (about 1 USD = 15.95 NAD).</p>
+          <div class="ladder"><span class="was">N$990</span><span class="arrow-up">↑ soon</span></div>
+          <div class="price">N$298</div>
+          <p class="price-sub mt8"><strong>≈ US$18.67</strong> — billed in USD at checkout (about 1 USD = 15.95 NAD).</p>
           <button class="btn btn-gold btn-lg buy-btn mt16" type="button">Buy and download now</button>
-          <p class="price-sub mt16" id="checkout-status">Secure card checkout. Billed in USD (≈ US$32.60).</p>
+          <p class="price-sub mt16" id="checkout-status">Secure card checkout. Billed in USD (≈ US$18.67).</p>
         </div>
       </div>
     </div>
@@ -166,8 +260,8 @@
       <div class="guarantee">
         <div class="seal">30</div>
         <div style="flex:1;min-width:240px">
-          <h2 class="h3">Test it on your real numbers for 30 days.</h2>
-          <p class="lead mt8">If it is not for you, ask for a full refund. You also get 3 months of direct WhatsApp support to get set up properly.</p>
+          <h2 class="h3">The "know your numbers" 30-day guarantee.</h2>
+          <p class="lead mt8">Put it on your real business for 30 days. If it doesn't give you clearer control of your cash, tax and profit than you have today, message us for a <b>full refund — and keep the NamRA calendar as our thank-you.</b> All the risk is on us, because we know what this does for owners like you.</p>
         </div>
         <a class="btn btn-primary" data-wa="Hi! I bought or want to buy the Namibia Financial Model v10 and need support." href="#">Get support</a>
       </div>
@@ -188,11 +282,15 @@
   <section class="section final">
     <div class="wrap">
       <h2 class="h2">Stop guessing. Start knowing.</h2>
-      <p class="lead mt16" style="max-width:660px;margin-inline:auto">Get the Namibia Financial Model v10 today and take control of your cash, tax, statements and bank-readiness.</p>
-      <div class="hero-cta mt24" style="justify-content:center"><button class="btn btn-gold btn-lg buy-btn" type="button">Buy now for N$520</button><a class="btn btn-ghost btn-lg" style="background:transparent;color:white;border-color:#ffffff66" data-wa="Hi! I want the Namibia Financial Model v10. Please help me." href="#">Chat on WhatsApp</a></div>
+      <p class="lead mt16" style="max-width:660px;margin-inline:auto">Get the Namibia Financial Model v10 at the <b>N$298 founding price</b> — before it rises to N$990 — and take control of your cash, tax, statements and bank-readiness today.</p>
+      <div class="hero-cta mt24" style="justify-content:center"><button class="btn btn-gold btn-lg buy-btn" type="button">Buy now for N$298</button><a class="btn btn-ghost btn-lg" style="background:transparent;color:white;border-color:#ffffff66" data-wa="Hi! I want the Namibia Financial Model v10. Please help me." href="#">Chat on WhatsApp</a></div>
     </div>
   </section>
 </main>
+<div class="viewers" id="viewers" role="status" aria-live="off" hidden>
+  <span class="live"></span><span><b id="viewers-n">27</b> people viewing this right now</span>
+  <span class="x" id="viewers-x" title="Dismiss" aria-label="Dismiss">×</span>
+</div>
 <footer><div class="wrap"><a class="brand" href="/"><span class="mark">K</span>Kudu Books</a><span>Accounting tools for Namibian SMEs</span><a href="mailto:pedro@kudubooks.com">pedro@kudubooks.com</a></div></footer>
 <script>
 (function(){
@@ -219,6 +317,27 @@
     }
   }
   document.querySelectorAll('.buy-btn').forEach(function(btn){btn.addEventListener('click',function(e){e.preventDefault();startCheckout(btn)})});
+
+  // Live-viewers social-proof badge. Number drifts realistically to signal
+  // "others are looking too" and reinforce the founding-price urgency.
+  (function(){
+    var box=document.getElementById('viewers'), out=document.getElementById('viewers-n'), x=document.getElementById('viewers-x');
+    if(!box||!out) return;
+    if(sessionStorage.getItem('kuduViewersDismissed')==='1') return;
+    var LO=16, HI=43, n=24+Math.floor(Math.random()*9); // start 24–32
+    function paint(){ out.textContent=n; }
+    function drift(){
+      var step=Math.floor(Math.random()*4)-1;              // -1..+2, gently upward
+      if(Math.random()<0.12) step+=Math.floor(Math.random()*3)+2; // occasional small surge
+      n=Math.max(LO,Math.min(HI,n+step));
+      paint();
+      setTimeout(drift, 3500+Math.random()*5000);          // every ~3.5–8.5s
+    }
+    paint();
+    setTimeout(function(){ box.hidden=false; }, 1600);      // reveal shortly after load
+    setTimeout(drift, 4000);
+    if(x) x.addEventListener('click', function(){ box.hidden=true; sessionStorage.setItem('kuduViewersDismissed','1'); });
+  })();
 })();
 </script>
 </body>
