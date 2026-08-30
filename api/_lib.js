@@ -19,6 +19,13 @@ function productFileBuffer() {
   if (process.env.PRODUCT_FILE_BASE64) {
     return Buffer.from(process.env.PRODUCT_FILE_BASE64, 'base64');
   }
+  // Vercel caps a single env var at ~64KB and the base64 workbook is larger, so
+  // it may be split across PRODUCT_FILE_BASE64_1, _2, ... (concatenated in order).
+  let combined = '';
+  for (let i = 1; process.env[`PRODUCT_FILE_BASE64_${i}`]; i += 1) {
+    combined += process.env[`PRODUCT_FILE_BASE64_${i}`];
+  }
+  if (combined) return Buffer.from(combined, 'base64');
   return null;
 }
 
